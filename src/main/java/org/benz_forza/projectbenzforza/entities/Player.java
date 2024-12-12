@@ -12,6 +12,7 @@ public class Player {
     @Column(name = "player_id")
     private int id;
 
+
     @Column(name ="player_first_name",length = 50, nullable = false)
     private String firstName;
 
@@ -21,20 +22,13 @@ public class Player {
     @Column(name ="player_last_name",length = 50, nullable = false)
     private String lastName;
 
-    public Team getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Team teamId) {
-        this.teamId = teamId;
-    }
-
     @ManyToOne
-
     @JoinColumn(name = "team_id", nullable = true)
     private Team teamId;
 
-
+   @ManyToOne
+   @JoinColumn(name = "game_id", nullable = false)
+   private Game gameId;
 
 
     public Player() {
@@ -73,6 +67,21 @@ public class Player {
         this.lastName = lastName;
     }
 
+    public Game getGameId() {
+      return gameId;
+   }
+
+   public void setGameId(Game gameId) {
+       this.gameId = gameId;
+    }
+
+    public Team getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Team teamId) {
+        this.teamId = teamId;
+    }
 
 
     @Override
