@@ -4,5 +4,5 @@ module org.benz_forza.projectbenzforza {
     requires org.hibernate.orm.core;
 
     opens org.benz_forza.projectbenzforza.entities to org.hibernate.orm.core;
-    exports org.benz_forza.projectbenzforza;
+    exports org.benz_forza.projectbenzforza.views to javafx.graphics;
 }
