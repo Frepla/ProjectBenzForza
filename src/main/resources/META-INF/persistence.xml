@@ -5,20 +5,22 @@
 
     <persistence-unit name="myconfig">
 
-<!--        <class>se.verran.javafxhibernatedemo.entities.Customer</class>-->
-<!--        <class>se.verran.javafxhibernatedemo.entities.MobilePhone</class>-->
-<!--        <class>se.verran.javafxhibernatedemo.entities.Car</class>-->
+        <class>org.benz_forza.projectbenzforza.entities.Match</class>
+
+
+          <!--lägg till entities här-->
+
 
         <properties>
             <!-- MySQL -->
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://192.168.1.236:3306/cardealer"/>
+                      value="jdbc:mysql://localhost/benzforza"/>
 
             <!-- Credentials -->
             <property name="jakarta.persistence.jdbc.user"
-                      value="bill"/>
+                      value="benz"/>
             <property name="jakarta.persistence.jdbc.password"
-                      value="clinton"/>
+                      value="forza"/>
 
             <!-- Automatic schema export -->
             <property name="jakarta.persistence.schema-generation.database.action"
