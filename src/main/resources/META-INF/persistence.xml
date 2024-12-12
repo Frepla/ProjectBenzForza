@@ -5,10 +5,10 @@
 
     <persistence-unit name="myconfig">
 
-        <!-- MySQL -->
-        <class>org.benz_forza.projectbenzforza.entities.Player</class>
-        <class>org.benz_forza.projectbenzforza.entities.Team</class>
-        <class>org.benz_forza.projectbenzforza.entities.Game</class>
+        <class>org.benz_forza.projectbenzforza.entities.Match</class>
+
+
+          <!--lägg till entities här-->
 
 
         <properties>
@@ -18,28 +18,20 @@
 
             <!-- Credentials -->
             <property name="jakarta.persistence.jdbc.user"
-                      value="root"/>
+                      value="benz"/>
             <property name="jakarta.persistence.jdbc.password"
-                      value="Rufus123"/>
+                      value="forza"/>
 
             <!-- Automatic schema export -->
-           <!--<property name="jakarta.persistence.schema-generation.database.action"
-                      value="create-drop"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-            <property name="hibernate.hbm2ddl.import_files" value="import.sql"/>
-
-
-
-
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="drop-and-create"/>
+            <!-- <property name="hibernate.hbm2ddl" value="create-drop"/> -->
 
             <!-- SQL statement logging -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.highlight_sql" value="true"/>
-            <!--<property name="hibernate.hbm2ddl.import_files" value="import.sql"/>-->
-
-
-
+            <property name="hibernate.hbm2ddl.import_files" value="data.sql"/>
 
         </properties>
 
