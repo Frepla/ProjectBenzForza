@@ -1,32 +1,47 @@
 package org.benz_forza.projectbenzforza.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.mapping.Join;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "matches")
 public class Match {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "player1_id", nullable = true)
-    private Player player;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "match_type", nullable = false)
+    private MatchType matchType;
 
     @ManyToOne
-    @JoinColumn(name = "player2_id", nullable = true)
+    @JoinColumn(name = "player1_id", nullable = false)
+    private Player player1;
+
+    @ManyToOne
+    @JoinColumn(name = "player2_id", nullable = false)
     private Player player2;
 
     @ManyToOne
-    @JoinColumn(name = "team1_id", nullable = true)
+    @JoinColumn(name = "team1_id", nullable = false)
     private Team team1;
 
     @ManyToOne
-    @JoinColumn(name = "team2_id", nullable = true)
+    @JoinColumn(name = "team2_id", nullable = false)
     private Team team2;
+
+    @ManyToOne
+    @JoinColumn(name = "winner_player_id")
+    private Player winnerPlayer;
+
+    @ManyToOne
+    @JoinColumn(name = "winner_team_id")
+    private Team winnerTeam;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id")  // Nytt fält som refererar till Game
+    private Game game;
 
     @Column(name = "match_date", nullable = false)
     private LocalDateTime matchDate;
@@ -37,6 +52,11 @@ public class Match {
     @Column(name = "result")
     private String result;
 
+    public enum MatchType {
+        PLAYER_VS_PLAYER,
+        TEAM_VS_TEAM
+    }
+
     public int getId() {
         return id;
     }
@@ -45,12 +65,20 @@ public class Match {
         this.id = id;
     }
 
-    public Player getPlayer() {
-        return player;
+    public MatchType getMatchType() {
+        return matchType;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setMatchType(MatchType matchType) {
+        this.matchType = matchType;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
     }
 
     public Player getPlayer2() {
@@ -75,6 +103,30 @@ public class Match {
 
     public void setTeam2(Team team2) {
         this.team2 = team2;
+    }
+
+    public Player getWinnerPlayer() {
+        return winnerPlayer;
+    }
+
+    public void setWinnerPlayer(Player winnerPlayer) {
+        this.winnerPlayer = winnerPlayer;
+    }
+
+    public Team getWinnerTeam() {
+        return winnerTeam;
+    }
+
+    public void setWinnerTeam(Team winnerTeam) {
+        this.winnerTeam = winnerTeam;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public LocalDateTime getMatchDate() {
