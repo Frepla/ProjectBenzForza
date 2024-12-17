@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
@@ -5,16 +6,17 @@
 
     <persistence-unit name="myconfig">
 
+        <!-- Lägg till entiteter här -->
+        <class>org.benz_forza.projectbenzforza.entities.Game</class>
         <class>org.benz_forza.projectbenzforza.entities.Match</class>
-
-
-          <!--lägg till entities här-->
-
+        <class>org.benz_forza.projectbenzforza.entities.Player</class>
+<!--        <class>org.benz_forza.projectbenzforza.entities.Staff</class>-->
+        <class>org.benz_forza.projectbenzforza.entities.Team</class>
 
         <properties>
             <!-- MySQL -->
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost/benzforza"/>
+                      value="jdbc:mysql://localhost:3306/benzforza"/>
 
             <!-- Credentials -->
             <property name="jakarta.persistence.jdbc.user"
@@ -23,16 +25,17 @@
                       value="forza"/>
 
             <!-- Automatic schema export -->
-            <property name="jakarta.persistence.schema-generation.database.action"
-                      value="drop-and-create"/>
-            <!-- <property name="hibernate.hbm2ddl" value="create-drop"/> -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
 
             <!-- SQL statement logging -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.highlight_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/> <!-- Gör SQL-utskrifterna mer synliga -->
             <property name="hibernate.hbm2ddl.import_files" value="import.sql"/>
 
+            <!-- Hibernate properties -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.id.new_generator_mappings" value="true"/>
         </properties>
 
     </persistence-unit>
