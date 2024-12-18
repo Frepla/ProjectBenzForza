@@ -26,6 +26,9 @@ public class Team {
     }
 
     public Team(String teamName, Game game) {
+        if (teamName == null || teamName.isEmpty()) {
+            throw new IllegalArgumentException("Team name must not be null or empty.");
+        }
         this.teamName = teamName;
         this.game = game;
     }
@@ -43,6 +46,9 @@ public class Team {
     }
 
     public void setTeamName(String teamName) {
+        if (teamName == null || teamName.isEmpty()) {
+            throw new IllegalArgumentException("Team name must not be null or empty.");
+        }
         this.teamName = teamName;
     }
 
