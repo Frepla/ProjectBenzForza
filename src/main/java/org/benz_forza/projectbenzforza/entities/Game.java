@@ -1,6 +1,8 @@
 package org.benz_forza.projectbenzforza.entities;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "games")
 public class Game {
