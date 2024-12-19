@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import org.benz_forza.projectbenzforza.entities.Game;
 import org.benz_forza.projectbenzforza.entities.Player;
 import org.benz_forza.projectbenzforza.entities.Team;
+import org.benz_forza.projectbenzforza.entities.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 // FREDRIK & JESPER
 public class TeamDAO {
@@ -216,7 +216,12 @@ public class TeamDAO {
     }
 
 
-}
+    public static void closeFactory() {
+        if (ENTITY_MANAGER_FACTORY != null && ENTITY_MANAGER_FACTORY.isOpen()) {
+            ENTITY_MANAGER_FACTORY.close();
+        }
+    }
 
+}
 
 
