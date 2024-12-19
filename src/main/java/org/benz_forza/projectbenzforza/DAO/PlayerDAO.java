@@ -2,17 +2,18 @@
 package org.benz_forza.projectbenzforza.DAO;
 
 import jakarta.persistence.*;
-        import org.benz_forza.projectbenzforza.entities.Game;
+import org.benz_forza.projectbenzforza.entities.Game;
 import org.benz_forza.projectbenzforza.entities.Player;
 import org.benz_forza.projectbenzforza.entities.Team;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//JESPER
 public class PlayerDAO {
     private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myconfig");
 
-    public static boolean addPlayer(String firstName, String lastName, String nickName) {
+    public static boolean addPlayer(String firstName, String lastName, String nickName, String address, String zipCode, String city,
+                                    String country, String email){
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
 
@@ -21,26 +22,35 @@ public class PlayerDAO {
             transaction.begin();
             Player player = new Player();
             player.setFirstName(firstName);
-            player.setNickName(nickName);
             player.setLastName(lastName);
+            player.setNickName(nickName);
+            player.setAddress(address);
+            player.setZipCode(zipCode);
+            player.setCity(city);
+            player.setCountry(country);
+            player.setEmail(email);
+
             entityManager.persist(player);
             transaction.commit();
 
             System.out.println(player.getId() + player.getFirstName());
 
-            System.out.println("Player sparad i databasen: " + player);
+            System.out.println("Player saved to database: " + player);
             return true;
 
 
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
+        } catch (PersistenceException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
             }
-            e.printStackTrace();
+            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                System.out.println("Error: Duplicate value for nickname or email.");
+            } else {
+                System.out.println("Error: Could not save player. " + e.getMessage());
+            }
             return false;
-        } finally {
-            entityManager.close();
         }
+
 
     }
 
@@ -52,21 +62,23 @@ public class PlayerDAO {
             transaction = entityManager.getTransaction();
             transaction.begin();
 
-
             Player player = entityManager.find(Player.class, playerId);
             if (player != null) {
-
-                Team newTeam = entityManager.find(Team.class, newTeamId);
-                if (newTeam != null) {
-                    player.setTeamId(newTeam);
-                    entityManager.merge(player);
-                    transaction.commit();
-                    System.out.println("Player " + playerId + " updated to new team");
-                    return true;
+                if (newTeamId == -1) {
+                    player.setTeamId(null);
                 } else {
-                    System.out.println("Error: Team with ID " + newTeamId + " not found.");
-                    return false;
+                    Team newTeam = entityManager.find(Team.class, newTeamId);
+                    if (newTeam != null) {
+                        player.setTeamId(newTeam);
+                    } else {
+                        System.out.println("Error: Team with ID " + newTeamId + " not found.");
+                        return false;
+                    }
                 }
+                entityManager.merge(player);
+                transaction.commit();
+                System.out.println("Player " + playerId + " updated with new team");
+                return true;
             } else {
                 System.out.println("Error: Player with ID " + playerId + " not found.");
                 return false;
@@ -81,6 +93,7 @@ public class PlayerDAO {
             entityManager.close();
         }
     }
+
 
     public static boolean updatePlayerGame(int playerId, int newGameId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -118,28 +131,35 @@ public class PlayerDAO {
         }
     }
 
-    public static void deletePlayer (Player player){
+    public static boolean deletePlayer(Player player) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = null;
-        try{
+
+        try {
             transaction = entityManager.getTransaction();
             transaction.begin();
+
             if (!entityManager.contains(player)) {
                 player = entityManager.merge(player);
-                System.out.println(player.getId() + player.getFirstName());
+                System.out.println("Merging player: " + player.getId() + " " + player.getFirstName());
             }
             entityManager.remove(player);
             transaction.commit();
-            System.out.println("Player " + player.getId() + " deleted");
+            System.out.println("Player " + player.getId() + " deleted successfully.");
+            return true;
+
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            if(entityManager != null && transaction != null && transaction.isActive()) {
+            System.out.println("Error: Can't delete player: " + e.getMessage());
+            if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-        }finally {
+            return false;
+
+        } finally {
             entityManager.close();
         }
     }
+
 
     public static List<Player> getAllPlayers() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -212,8 +232,13 @@ public class PlayerDAO {
 
     public static String getGameNameById(int id) {
         Game game = getGameById(id);
-        return (game != null) ? game.getGameName() : null;
+        if (game != null) {
+            return game.getGameName();
+        } else {
+            return null;
+        }
     }
+
 
 
     public static void close() {

@@ -1,36 +1,53 @@
 package org.benz_forza.projectbenzforza.DAO;
 
 import jakarta.persistence.*;
+import org.benz_forza.projectbenzforza.entities.Game;
+import org.benz_forza.projectbenzforza.entities.Player;
 import org.benz_forza.projectbenzforza.entities.Team;
 import org.benz_forza.projectbenzforza.entities.Player;
 
 import java.util.List;
-
+// FREDRIK & JESPER
 public class TeamDAO {
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("myconfig");
 
-    public boolean saveTeam(Team team) {
-        if (team == null || team.getTeamName() == null || team.getTeamName().isEmpty()) {
-            throw new IllegalArgumentException("Team or team name must not be null or empty.");
-        }
 
+    public static boolean saveTeam(String teamName, Game game) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
+
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
+
+
+            Team team = new Team();
+            team.setTeamName(teamName);
+            team.setGame(game);
+
             entityManager.persist(team);
             transaction.commit();
+
+            System.out.println("Team saved to database: " + team);
             return true;
-        } catch (Exception e) {
+
+        } catch (PersistenceException e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
+            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                System.out.println("Error: Duplicate team name.");
+            } else {
+                System.out.println("Error: Could not save team. " + e.getMessage());
+            }
             return false;
+
         } finally {
             entityManager.close();
         }
     }
+
+
 
     public Team getTeamById(int id) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -41,31 +58,30 @@ public class TeamDAO {
         }
     }
 
-    public List<Team> getAllTeams() {
+    public static List<Team> getAllTeams() {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        List<Team> teams = new ArrayList<>();
         try {
             TypedQuery<Team> query = entityManager.createQuery("FROM Team", Team.class);
-            return query.getResultList();
+            teams.addAll(query.getResultList());
+            return teams;
         } finally {
             entityManager.close();
         }
     }
 
-    public boolean updateTeam(Team teamToUpdate) {
-        if (teamToUpdate == null || teamToUpdate.getId() <= 0) {
-            throw new IllegalArgumentException("Team must exist and have a valid ID.");
-        }
-
+    public static boolean updateTeam(Team teamToUpdate) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            entityManager.merge(teamToUpdate);
+            entityManager.persist(entityManager.contains(teamToUpdate) ? teamToUpdate : entityManager.merge(teamToUpdate));
             transaction.commit();
             return true;
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
+            System.out.println(e.getMessage());
+            if (entityManager != null && transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             return false;
@@ -74,22 +90,34 @@ public class TeamDAO {
         }
     }
 
-    public boolean deleteTeam(Team team) {
-        if (team == null || team.getId() <= 0) {
-            throw new IllegalArgumentException("Team must exist and have a valid ID.");
-        }
-
+    public static boolean deleteTeam(Team team) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-            Team mergedTeam = entityManager.contains(team) ? team : entityManager.merge(team);
-            entityManager.remove(mergedTeam);
+
+            if (!entityManager.contains(team)) {
+                team = entityManager.merge(team);
+            }
+
+            List<Player> playersInTeam = entityManager.createQuery(
+                            "SELECT p FROM Player p WHERE p.teamId = :team", Player.class)
+                    .setParameter("team", team)
+                    .getResultList();
+
+            if (!playersInTeam.isEmpty()) {
+                for (Player player : playersInTeam) {
+                    removePlayer(player);
+                }
+            }
+            entityManager.remove(team);
+
             transaction.commit();
             return true;
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
+            System.out.println(e.getMessage());
+            if (entityManager != null && transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             return false;
@@ -98,11 +126,9 @@ public class TeamDAO {
         }
     }
 
-    public boolean deleteTeamById(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("ID must be a valid positive integer.");
-        }
 
+
+    public static boolean deleteTeamById(int id) {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
         try {
@@ -110,13 +136,14 @@ public class TeamDAO {
             transaction.begin();
             Team teamToDelete = entityManager.find(Team.class, id);
             if (teamToDelete != null) {
-                entityManager.remove(teamToDelete);
+                entityManager.remove(entityManager.contains(teamToDelete) ? teamToDelete : entityManager.merge(teamToDelete));
                 transaction.commit();
                 return true;
             }
             return false;
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
+            System.out.println(e.getMessage());
+            if (entityManager != null && transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             return false;
@@ -124,10 +151,77 @@ public class TeamDAO {
             entityManager.close();
         }
     }
+    public static Game getGameById(int id) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        Game gameToReturn = null;
+        try {
+            gameToReturn = entityManager.find(Game.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return gameToReturn;
+    }
+
+    public static boolean addPlayer(Player player, Team team) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            player.setTeamId(team);
+
+            entityManager.persist(entityManager.contains(player) ? player : entityManager.merge(player));
+
+            transaction.commit();
+            return true;
+
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public static boolean removePlayer(Player player) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
+
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            player.setTeamId(null);
+            entityManager.merge(player);
+
+            transaction.commit();
+            return true;
+
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+
+        } finally {
+            entityManager.close();
+        }
+    }
+
 
     public static void closeFactory() {
         if (ENTITY_MANAGER_FACTORY != null && ENTITY_MANAGER_FACTORY.isOpen()) {
             ENTITY_MANAGER_FACTORY.close();
         }
     }
+
 }
+
+

@@ -1,6 +1,8 @@
 package org.benz_forza.projectbenzforza.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,8 +17,10 @@ public class Team {
     @Column(name = "team_name", nullable = false, unique = true, length = 100)
     private String teamName;
 
-    @OneToMany(mappedBy = "teamId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Player> players;
+    @OneToMany(mappedBy = "teamId", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Player> players = new ArrayList<>();
+
+
 
     @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
@@ -70,10 +74,7 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team{" +
-                "id=" + id +
-                ", teamName='" + teamName + '\'' +
-                ", game=" + (game != null ? game.getGameName() : "N/A") +
-                '}';
+        return
+                teamName+ " | "+ (game != null ? game.getGameName() : "N/A");
     }
 }
