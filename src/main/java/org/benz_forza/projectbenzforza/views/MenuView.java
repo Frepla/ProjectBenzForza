@@ -77,9 +77,9 @@ public class MenuView {
         staffButton.setPrefSize(150, 50);
         staffButton.setOnAction(e -> {
             Stage staffStage = new Stage();
-     //       StaffView staffView = new StaffView();
+            StaffView staffView = new StaffView();
             try {
-    //            staffView.start(staffStage);
+                staffView.start(staffStage);
             } catch (Exception ex) {
                 System.out.println("Error while trying to load page: " + ex.getMessage());
             }
