@@ -26,7 +26,7 @@ public class StaffDAO {
         }
     }
 
-    public List<Staff> findAll() {
+    public static List<Staff> findAll() {
         EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
             return em.createQuery("FROM Staff", Staff.class).getResultList();

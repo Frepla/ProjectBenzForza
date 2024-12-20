@@ -1,6 +1,5 @@
 package org.benz_forza.projectbenzforza.views;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -12,8 +11,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.benz_forza.projectbenzforza.DAO.PlayerDAO;
-import org.benz_forza.projectbenzforza.entities.Player;
+import org.benz_forza.projectbenzforza.entities.Staff;
+import org.benz_forza.projectbenzforza.DAO.StaffDAO;
+
 import java.util.List;
 //JESPER
 public class StartView {
@@ -26,18 +26,20 @@ public class StartView {
         title.setAlignment(Pos.CENTER);
 
         // Här lägger vi in listan med Staff. testade bara med PLayer.
-        ListView<String> playerListView = new ListView<>();
-        List<Player> allPlayers = PlayerDAO.getAllPlayers();
-        ObservableList<String> observablePlayers = FXCollections.observableArrayList();
+        ListView<String> staffListView = new ListView<>();
+        StaffDAO staffDAO = new StaffDAO();
+        List<Staff> allStaff = StaffDAO.findAll();
+        ObservableList<String> observableStaff = FXCollections.observableArrayList();
 
-        for (Player player : allPlayers) {
-            String playerDetails = player.getFirstName() + " " + player.getLastName();
-            observablePlayers.add(playerDetails);
+        for (Staff staff : allStaff) {
+            String playerDetails = staff.getFirstName() + " " + staff.getLastName();
+            observableStaff.add(playerDetails);
         }
-        playerListView.setItems(observablePlayers);
+        staffListView.setItems(observableStaff);
 
         Button enterButton = new Button("Enter");
         enterButton.setOnAction(e -> {
+            stage.close();
             Stage menuStage = new Stage();
             MenuView menuView = new MenuView();
             try {
@@ -47,7 +49,7 @@ public class StartView {
             }
         });
 
-        root.getChildren().addAll(title,playerListView, enterButton);
+        root.getChildren().addAll(title,staffListView, enterButton);
 
         Scene scene = new Scene(root,800,800);
         stage.setScene(scene);

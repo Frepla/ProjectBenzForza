@@ -9,11 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.benz_forza.projectbenzforza.entities.Staff;
-import org.benz_forza.projectbenzforza.services.StaffService;
+import org.benz_forza.projectbenzforza.DAO.StaffDAO;
 
 public class StaffView {
 
-    private final StaffService staffService = new StaffService();
+    private final StaffDAO staffDAO = new StaffDAO();
 
     public void start(Stage staffStage) {
         VBox root = new VBox(20);
@@ -71,7 +71,7 @@ public class StaffView {
         staffTable.getColumns().addAll(firstName, lastName, nickname, email, address, postalCode, city, country);
 
         try {
-            staffTable.getItems().addAll(staffService.getAllStaff());
+            staffTable.getItems().addAll(staffDAO.findAll());
         } catch (Exception e) {
             System.err.println("Error loading staff: " + e.getMessage());
         }
@@ -127,7 +127,7 @@ public class StaffView {
             staff.setPostalCode(postalCode.getText());
             staff.setCity(city.getText());
             staff.setCountry(country.getText());
-            staffService.addStaff(staff);
+            staffDAO.create(staff);
             displayAllStaff();
             stage.close();
         });
