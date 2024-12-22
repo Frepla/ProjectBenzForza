@@ -23,8 +23,7 @@ import org.benz_forza.projectbenzforza.entities.Team;
 import java.util.List;
 
 //JESPER
-public class TeamView extends Application {
-    @Override
+public class TeamView {
     public void start(Stage stage) throws Exception {
         VBox root = new VBox(30);
         root.setBackground(new Background(new BackgroundFill(Color.DARKRED,null,null)));
@@ -60,14 +59,8 @@ public class TeamView extends Application {
         Button mainMenuButton = new Button("Main Menu");
         mainMenuButton.setPrefWidth(150);
         mainMenuButton.setPrefHeight(50);
-        mainMenuButton.setOnAction(e->{
-            MenuView menuView = new MenuView();
-            try {
-                menuView.start(stage);
-            } catch (Exception ex) {
-                System.out.println("Error loading MenuView: " + ex.getMessage());
-            }
-        });
+        mainMenuButton.setOnAction(e->stage.close());
+
 
         root.getChildren().addAll(title, displayButton, addButton, updateButton, deleteButton,mainMenuButton);
 
@@ -429,8 +422,4 @@ public class TeamView extends Application {
 
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

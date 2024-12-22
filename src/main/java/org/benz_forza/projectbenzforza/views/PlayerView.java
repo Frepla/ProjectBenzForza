@@ -22,8 +22,7 @@ import org.benz_forza.projectbenzforza.entities.Team;
 import java.util.ArrayList;
 import java.util.List;
 //JESPER
-public class PlayerView extends Application {
-    @Override
+public class PlayerView {
     public void start(Stage primaryStage) throws Exception {
         VBox root = new VBox(30);
         root.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET,null,null)));
@@ -77,14 +76,9 @@ public class PlayerView extends Application {
         Button mainMenuButton = new Button("Main Menu");
         mainMenuButton.setPrefWidth(120);
         mainMenuButton.setPrefHeight(20);
-        mainMenuButton.setOnAction(e->{
-            MenuView menuView = new MenuView();
-            try {
-                menuView.start(primaryStage);
-            } catch (Exception ex) {
-                System.out.println("Error loading MenuView: " + ex.getMessage());
-            }
-        });
+        mainMenuButton.setOnAction(e->primaryStage.close());
+
+
 
         root.getChildren().addAll(titleLabel,grid,addLabel,addButton,displayLabel,displayButton,
                 deleteLabel,deleteButton,updateLabel,updateButton,mainMenuButton);
@@ -630,7 +624,4 @@ public class PlayerView extends Application {
         deleteStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

@@ -9,17 +9,9 @@
         <!-- Lägg till entiteter här -->
         <class>org.benz_forza.projectbenzforza.entities.Game</class>
         <class>org.benz_forza.projectbenzforza.entities.Match</class>
-<<<<<<< Updated upstream
         <class>org.benz_forza.projectbenzforza.entities.Player</class>
-<!--        <class>org.benz_forza.projectbenzforza.entities.Staff</class>-->
-        <class>org.benz_forza.projectbenzforza.entities.Team</class>
-=======
         <class>org.benz_forza.projectbenzforza.entities.Staff</class>
-
-
-          <!--lägg till entities här-->
-
->>>>>>> Stashed changes
+        <class>org.benz_forza.projectbenzforza.entities.Team</class>
 
         <properties>
             <!-- MySQL -->

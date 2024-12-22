@@ -55,7 +55,7 @@ INSERT INTO player (game_id, player_id, team_id, player_address, player_city, pl
 -- CyberBall: Yellow Vipers (team_id = 4)
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (1, 13, 4, '401 Oak St', 'Los Angeles', 'USA', 'john.doe2@example.com', 'John', 'Doe', 'ViperStrike', '90002');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (1, 14, 4, '402 Oak St', 'Los Angeles', 'USA', 'elizabeth.jones@example.com', 'Elizabeth', 'Jones', 'ViperQueen', '90002');
-INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (1, 15, 4, '403 Oak St', 'Los Angeles', 'USA', 'matthew.lee@example.com', 'Matthew', 'Lee', 'ViperStrike', '90002');
+INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (1, 15, 4, '403 Oak St', 'Los Angeles', 'USA', 'matthew.lee@example.com', 'Matthew', 'Lee', 'ViperStriker', '90002');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (1, 16, 4, '404 Oak St', 'Los Angeles', 'USA', 'diana.smith@example.com', 'Diana', 'Smith', 'YellowFury', '90002');
 --- BattleStrike: Red Warriors (team_id = 5)
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (2, 17, 5, '101 Red St', 'Miami', 'USA', 'steve.martin@example.com', 'Steve', 'Martin', 'RedBlaze', '33101');
@@ -93,7 +93,7 @@ INSERT INTO player (game_id, player_id, team_id, player_address, player_city, pl
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (3, 40, 10, '204 Storm St', 'Atlanta', 'USA', 'lisa.wilson@example.com', 'Lisa', 'Wilson', 'TempestWarrior', '30301');
 
 -- ArenaShowdown: Shadow Warriors (team_id = 11)
-INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (3, 41, 11, '301 Shadow St', 'Denver', 'USA', 'olivia.green@example.com', 'Olivia', 'Green', 'ShadowKnight', '80201');
+INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (3, 41, 11, '301 Shadow St', 'Denver', 'USA', 'olivia.green@example.com', 'Olivia', 'Green', 'ShadowKnite', '80201');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (3, 42, 11, '302 Shadow St', 'Denver', 'USA', 'ethan.davis@example.com', 'Ethan', 'Davis', 'DarkRider', '80201');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (3, 43, 11, '303 Shadow St', 'Denver', 'USA', 'maria.hall@example.com', 'Maria', 'Hall', 'NightAssassin', '80201');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (3, 44, 11, '304 Shadow St', 'Denver', 'USA', 'jared.martin@example.com', 'Jared', 'Martin', 'NightHunter', '80201');
@@ -138,7 +138,7 @@ INSERT INTO player (game_id, player_id, team_id, player_address, player_city, pl
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (6, 69, NULL, '401 Oak St', 'Los Angeles', 'USA', 'jack.doe@example.com', 'Jack', 'Doe', 'ShadowKnight', '90003');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (6, 70, NULL, '402 Oak St', 'Los Angeles', 'USA', 'sara.jones@example.com', 'Sara', 'Jones', 'DarkAssassin', '90003');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (6, 71, NULL, '403 Oak St', 'Los Angeles', 'USA', 'mary.smith@example.com', 'Mary', 'Smith', 'ShadowMaster', '90003');
-INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (6, 72, NULL, '404 Oak St', 'Los Angeles', 'USA', 'paul.brown@example.com', 'Paul', 'Brown', 'NightHunter', '90003');
+INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (6, 72, NULL, '404 Oak St', 'Los Angeles', 'USA', 'paul.brown@example.com', 'Paul', 'Brown', 'NightGunter', '90003');
 
 -- SniperEliteX (game_id = 7)
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (7, 73, NULL, '501 Birch St', 'Phoenix', 'USA', 'mike.peters@example.com', 'Mike', 'Peters', 'EliteSniper', '85002');
@@ -152,79 +152,6 @@ INSERT INTO player (game_id, player_id, team_id, player_address, player_city, pl
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (8, 79, NULL, '603 Cedar St', 'Dallas', 'USA', 'joshua.williams@example.com', 'Joshua', 'Williams', 'ElementalMage', '75201');
 INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code) VALUES (8, 80, NULL, '604 Cedar St', 'Dallas', 'USA', 'laura.miller@example.com', 'Laura', 'Miller', 'MysticQueen', '75201');
 
-
-
-
--- Insert data into GAMES table
--- INSERT INTO games (game_id, game_name) VALUES (1, 'Soccer');
--- INSERT INTO games (game_id, game_name) VALUES (2, 'Basketball');
--- INSERT INTO games (game_id, game_name) VALUES (3, 'Baseball');
--- INSERT INTO games (game_id, game_name) VALUES (4, 'Hockey');
--- INSERT INTO games (game_id, game_name) VALUES (5, 'Tennis');
---
--- -- Insert data into TEAMS table
--- INSERT INTO teams (game_id, team_id, team_name) VALUES (1, 1, 'Red Dragons');
--- INSERT INTO teams (game_id, team_id, team_name) VALUES (2, 2, 'Blue Sharks');
--- INSERT INTO teams (game_id, team_id, team_name) VALUES (3, 3, 'Golden Eagles');
---
--- -- Insert data into PLAYER table
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (1, 1, 1, '123 Main St', 'New York', 'USA', 'john.doe@example.com', 'John', 'Doe', 'Johnny', '12345');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (2, 2, 2, '456 Maple Ave', 'Los Angeles', 'USA', 'jane.smith@example.com', 'Jane', 'Smith', 'Janey', '54321');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (3, 3, 3, '789 Oak Dr', 'Chicago', 'USA', 'bob.brown@example.com', 'Bob', 'Brown', 'Bobby', '67890');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (1, 4, 1, '321 Pine St', 'San Francisco', 'USA', 'alice.green@example.com', 'Alice', 'Green', 'Ali', '45678');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (2, 5, 2, '654 Cedar Ln', 'Houston', 'USA', 'tom.white@example.com', 'Tom', 'White', 'Tommy', '98765');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (3, 6, 3, '987 Birch Blvd', 'Miami', 'USA', 'emma.johnson@example.com', 'Emma', 'Johnson', 'Em', '23456');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (1, 7, 1, '741 Spruce St', 'Seattle', 'USA', 'michael.williams@example.com', 'Michael', 'Williams', 'Mike', '13579');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (2, 8, 2, '852 Willow Ave', 'Boston', 'USA', 'sophia.lee@example.com', 'Sophia', 'Lee', 'Sophie', '24680');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (3, 9, 3, '963 Elm Rd', 'Denver', 'USA', 'chris.miller@example.com', 'Chris', 'Miller', 'Chris', '11223');
--- INSERT INTO player (game_id, player_id, team_id, player_address, player_city, player_country, player_email, player_first_name, player_last_name, player_nick_name, player_zip_code)VALUES (1, 10, 1, '159 Redwood St', 'Austin', 'USA', 'olivia.davis@example.com', 'Olivia', 'Davis', 'Liv', '33445');
---
--- -- Första tabellen
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (1, 1, TRUE, NULL, NULL, 1, 2, NULL, 1, '2024-05-01 15:00:00', '3-1', 'TEAM_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (2, 2, TRUE, 1, 2, NULL, NULL, 1, NULL, '2024-05-02 16:00:00', '2-0', 'PLAYER_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (3, 1, TRUE, NULL, NULL, 3, 4, NULL, 3, '2024-05-03 18:00:00', '1-0', 'TEAM_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (4, 3, TRUE, 3, 4, NULL, NULL, 4, NULL, '2024-05-04 14:00:00', '2-1', 'PLAYER_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (5, 1, TRUE, NULL, NULL, 5, 6, NULL, 6, '2024-05-05 17:00:00', '4-2', 'TEAM_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (6, 3, TRUE, 5, 6, NULL, NULL, 6, NULL, '2024-05-06 13:00:00', '3-0', 'PLAYER_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (7, 2, TRUE, NULL, NULL, 7, 8, NULL, 7, '2024-05-07 19:00:00', '5-4', 'TEAM_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (8, 2, TRUE, 7, 8, NULL, NULL, 7, NULL, '2024-05-08 11:00:00', '1-0', 'PLAYER_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (9, 1, TRUE, NULL, NULL, 9, 10, NULL, 10, '2024-05-09 15:30:00', '2-1', 'TEAM_MATCH');
--- INSERT INTO matches (id, game_id, is_finished, player1_id, player2_id, team1_id, team2_id, winner_player_id, winner_team_id, match_date, result, match_type)VALUES (10, 2, TRUE, 9, 10,
--- -- Insert data into GAME table
--- INSERT INTO game (game_id, game_name) VALUES (1, 'Soccer');
--- INSERT INTO game (game_id, game_name) VALUES (2, 'Basketball');
--- INSERT INTO game (game_id, game_name) VALUES (3, 'Baseball');
--- INSERT INTO game (game_id, game_name) VALUES (4, 'Hockey');
--- INSERT INTO game (game_id, game_name) VALUES (5, 'Tennis');
---
--- -- Insert data into TEAM table först
--- INSERT INTO team (team_id, team_name) VALUES (1, 'Red Dragons');
--- INSERT INTO team (team_id, team_name) VALUES (2, 'Blue Sharks');
--- INSERT INTO team (team_id, team_name) VALUES (3, 'Golden Eagles');
---
--- -- -- Insert data into PLAYER table efter team
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (1,1,1, 1, 'John', 'Doe', 'Johnny');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (2,2, 2, 'Jane', 'Smith', 'Janey');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (3,3, 3, 'Bob', 'Brown', 'Bobby');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (1,4, 1, 'Alice', 'Green', 'Ali');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (2,5, 2, 'Tom', 'White', 'Tommy');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (3,6, 3, 'Emma', 'Johnson', 'Em');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (1,7, 1, 'Michael', 'Williams', 'Mike');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (2,8, 2, 'Sophia', 'Lee', 'Sophie');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (3,9, 3, 'Chris', 'Miller', 'Chris');
--- INSERT INTO player (game_id, player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (1,10, 1, 'Olivia', 'Davis', 'Liv');
---
--- -- -- -- -- Insert data into PLAYER table efter team
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (1, 1, 'John', 'Doe', 'Johnny');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (2, 2, 'Jane', 'Smith', 'Janey');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (3, 3, 'Bob', 'Brown', 'Bobby');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (4, 1, 'Alice', 'Green', 'Ali');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (5, 2, 'Tom', 'White', 'Tommy');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (6, 3, 'Emma', 'Johnson', 'Em');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (7, 1, 'Michael', 'Williams', 'Mike');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (8, 2, 'Sophia', 'Lee', 'Sophie');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (9, 3, 'Chris', 'Miller', 'Chris');
--- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (10, 1, 'Olivia', 'Davis', 'Liv');
 
 INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Richard', 'Hendricks', 'Richie', 'richard.hendricks@piedpiper.com', '123 Startup Lane', '94025', 'Menlo Park', 'USA');
 INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Bertram', 'Gilfoyle', 'Gilfoyle', 'gilfoyle@piedpiper.com', '456 Hacker Way', '94040', 'Mountain View', 'USA');

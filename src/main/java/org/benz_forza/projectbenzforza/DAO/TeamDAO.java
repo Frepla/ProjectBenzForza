@@ -217,12 +217,6 @@ public class TeamDAO {
     }
 
 
-    public static void closeFactory() {
-        if (ENTITY_MANAGER_FACTORY != null && ENTITY_MANAGER_FACTORY.isOpen()) {
-            ENTITY_MANAGER_FACTORY.close();
-        }
-    }
-
 }
 
 
