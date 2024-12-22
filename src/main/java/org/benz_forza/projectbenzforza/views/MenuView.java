@@ -91,6 +91,7 @@ public class MenuView {
             StartView signOutView = new StartView();
             try {
                signOutView.start(signOutStage);
+               primaryStage.close();
             } catch (Exception ex) {
                 System.out.println("Error while trying to load page: " + ex.getMessage());
             }

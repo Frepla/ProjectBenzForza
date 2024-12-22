@@ -2,7 +2,7 @@ package org.benz_forza.projectbenzforza.DAO;
 import org.benz_forza.projectbenzforza.entities.Staff;
 import jakarta.persistence.*;
 import java.util.List;
-
+//Johan
 public class StaffDAO {
 
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("myconfig");

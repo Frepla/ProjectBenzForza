@@ -5,13 +5,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.benz_forza.projectbenzforza.entities.Staff;
 import org.benz_forza.projectbenzforza.DAO.StaffDAO;
 
+
+
+//Johan
 public class StaffView {
 
     private final StaffDAO staffDAO = new StaffDAO();
@@ -20,29 +23,30 @@ public class StaffView {
         VBox root = new VBox(20);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
+        root.setBackground(new Background(new BackgroundFill(Color.DARKVIOLET, new CornerRadii(5), new Insets(5))));
 
         Label titleLabel = new Label("Staff Management");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box,White,5,0,0,0);");
 
         Button viewAllStaffButton = new Button("View All Staff");
-        viewAllStaffButton.setPrefWidth(200);
+        viewAllStaffButton.setPrefSize(150,50);
         viewAllStaffButton.setOnAction(e -> displayAllStaff());
 
         Button addStaffButton = new Button("Add New Staff");
-        addStaffButton.setPrefWidth(200);
+        addStaffButton.setPrefSize(150,50);
         addStaffButton.setOnAction(e -> addStaffForm());
 
         Button editStaffButton = new Button("Edit Staff");
-        editStaffButton.setPrefWidth(200);
+        editStaffButton.setPrefSize(150,50);
         editStaffButton.setOnAction(e -> editStaffForm());
 
         Button backButton = new Button("Back to Menu");
-        backButton.setPrefWidth(200);
+        backButton.setPrefSize(150,50);
         backButton.setOnAction(e -> staffStage.close());
 
         root.getChildren().addAll(titleLabel, viewAllStaffButton, addStaffButton, editStaffButton, backButton);
 
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 800, 800);
         staffStage.setScene(scene);
         staffStage.setTitle("Staff Management");
         staffStage.show();
@@ -117,7 +121,7 @@ public class StaffView {
         backButton.setOnAction(e -> stage.close());
 
         vbox.getChildren().addAll(staffTable, backButton);
-        Scene scene = new Scene(vbox, 800, 600);
+        Scene scene = new Scene(vbox, 800, 800);
         stage.setScene(scene);
         stage.setTitle("All Staff");
         stage.show();
@@ -198,7 +202,7 @@ public class StaffView {
         buttonBox.setAlignment(Pos.CENTER);
 
         vbox.getChildren().addAll(firstName, lastName, nickname, email, address, postalCode, city, country, validationMessage, buttonBox);
-        Scene scene = new Scene(vbox, 400, 400);
+        Scene scene = new Scene(vbox, 800, 800);
         stage.setScene(scene);
         stage.setTitle("Add New Staff");
         stage.show();
@@ -257,7 +261,7 @@ public class StaffView {
         buttonBox.setAlignment(Pos.CENTER);
 
         vbox.getChildren().addAll(new Label("First Name:"), firstName, new Label("Last Name:"), lastName, new Label("Email:"), email, validationMessage, staffTable, buttonBox);
-        Scene scene = new Scene(vbox, 600, 400);
+        Scene scene = new Scene(vbox, 800, 800);
         stage.setScene(scene);
         stage.setTitle("Edit Staff");
         stage.show();

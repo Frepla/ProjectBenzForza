@@ -1,6 +1,6 @@
 package org.benz_forza.projectbenzforza.entities;
 import jakarta.persistence.*;
-
+//Johan
 @Entity
 public class Staff {
 
