@@ -2,7 +2,9 @@ package org.benz_forza.projectbenzforza.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+//Fredrik
 @Entity
 @Table(name = "matches")
 public class Match {
@@ -15,31 +17,31 @@ public class Match {
     @Column(name = "match_type", nullable = false)
     private MatchType matchType;
 
-    @ManyToOne
-    @JoinColumn(name = "player1_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player1_id")
     private Player player1;
 
-    @ManyToOne
-    @JoinColumn(name = "player2_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player2_id")
     private Player player2;
 
-    @ManyToOne
-    @JoinColumn(name = "team1_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team1_id")
     private Team team1;
 
-    @ManyToOne
-    @JoinColumn(name = "team2_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team2_id")
     private Team team2;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "winner_player_id")
     private Player winnerPlayer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "winner_team_id")
     private Team winnerTeam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id")
     private Game game;
 
@@ -57,9 +59,36 @@ public class Match {
         TEAM_VS_TEAM
     }
 
+    public Match() {
+    }
+
+    public Match(LocalDateTime matchDate, Game game, Player player1, Player player2, boolean isFinished, String result) {
+        this.matchType = MatchType.PLAYER_VS_PLAYER;
+        this.matchDate = matchDate;
+        this.game = game;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.isFinished = isFinished;
+        this.result = result;
+    }
+
+    public Match(LocalDateTime matchDate, Game game, Team team1, Team team2, boolean isFinished, String result) {
+        this.matchType = MatchType.TEAM_VS_TEAM;
+        this.matchDate = matchDate;
+        this.game = game;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.isFinished = isFinished;
+        this.result = result;
+    }
+
     @PrePersist
     @PreUpdate
     public void validateMatch() {
+        if (matchDate == null) {
+            throw new IllegalStateException("Match date must be set.");
+        }
+
         if (matchType == MatchType.PLAYER_VS_PLAYER) {
             if (player1 == null || player2 == null) {
                 throw new IllegalStateException("Player1 and Player2 must be set for PLAYER_VS_PLAYER matches.");
@@ -76,8 +105,6 @@ public class Match {
             }
         }
     }
-
-    // Getters and setters
 
     public int getId() {
         return id;
@@ -164,7 +191,10 @@ public class Match {
     }
 
     public void setFinished(boolean finished) {
-        isFinished = finished;
+        if (finished && result == null) {
+            throw new IllegalStateException("Result must be set if the match is finished.");
+        }
+        this.isFinished = finished;
     }
 
     public String getResult() {
@@ -175,21 +205,26 @@ public class Match {
         this.result = result;
     }
 
-    @Override
-    public String toString() {
-        return "Match{" +
-                "id=" + id +
-                ", matchType=" + matchType +
-                ", player1=" + player1 +
-                ", player2=" + player2 +
-                ", team1=" + team1 +
-                ", team2=" + team2 +
-                ", winnerPlayer=" + winnerPlayer +
-                ", winnerTeam=" + winnerTeam +
-                ", game=" + game +
-                ", matchDate=" + matchDate +
-                ", isFinished=" + isFinished +
-                ", result='" + result + '\'' +
-                '}';
+    public void setMatchDateFromString(String matchDateString) {
+        if (matchDateString == null || matchDateString.isEmpty()) {
+            throw new IllegalArgumentException("Match date string cannot be null or empty.");
+        }
+
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            this.matchDate = LocalDateTime.parse(matchDateString, formatter);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid match date format. Expected format: yyyy-MM-dd HH:mm", e);
+        }
     }
+
+    public Object getWinner() {
+        if (matchType == MatchType.PLAYER_VS_PLAYER) {
+            return winnerPlayer;
+        } else if (matchType == MatchType.TEAM_VS_TEAM) {
+            return winnerTeam;
+        }
+        return null;
+    }
+
 }
