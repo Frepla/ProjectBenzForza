@@ -226,5 +226,12 @@ INSERT INTO player (game_id, player_id, team_id, player_address, player_city, pl
 -- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (9, 3, 'Chris', 'Miller', 'Chris');
 -- -- INSERT INTO player (player_id, team_id, player_first_name, player_last_name, player_nick_name) VALUES (10, 1, 'Olivia', 'Davis', 'Liv');
 
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Richard', 'Hendricks', 'Richie', 'richard.hendricks@piedpiper.com', '123 Startup Lane', '94025', 'Menlo Park', 'USA');
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Bertram', 'Gilfoyle', 'Gilfoyle', 'gilfoyle@piedpiper.com', '456 Hacker Way', '94040', 'Mountain View', 'USA');
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Dinesh', 'Chugtai', 'Dinesh', 'dinesh.chugtai@piedpiper.com', '789 Coders Street', '94041', 'Sunnyvale', 'USA');
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Erlich', 'Bachman', 'Erlich', 'erlich.bachman@piedpiper.com', '321 Aviato Avenue', '94025', 'Palo Alto', 'USA');
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Donald', 'Dunn', 'Jared', 'jared.dunn@piedpiper.com', '987 Optimist Way', '94063', 'Redwood City', 'USA');
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Monica', 'Hall', 'Monica', 'monica.hall@piedpiper.com', '654 Venture Capital Blvd', '94043', 'Mountain View', 'USA');
+INSERT INTO staff (first_name, last_name, nickname, email, address, postal_code, city, country) VALUES ('Nelson', 'Bighetti', 'Big Head', 'bighead@piedpiper.com', '222 Cloud Computing Drive', '94087', 'Cupertino', 'USA');
 
 
