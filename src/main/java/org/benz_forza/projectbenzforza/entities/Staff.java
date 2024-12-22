@@ -2,6 +2,7 @@ package org.benz_forza.projectbenzforza.entities;
 import jakarta.persistence.*;
 //Johan
 @Entity
+@Table(name = "staff")
 public class Staff {
 
 
