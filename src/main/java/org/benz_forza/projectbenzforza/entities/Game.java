@@ -1,4 +1,5 @@
 package org.benz_forza.projectbenzforza.entities;
+
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -6,24 +7,19 @@ import java.util.List;
 @Entity
 @Table(name = "games")
 public class Game {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_id")
     private int id;
 
-    @Column(name = "game_name", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String gameName;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Match> matches;
+    private List<Player> players;
 
-    public Game() {
-    }
-
-    public Game(String gameName) {
-        this.gameName = gameName;
-    }
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Team> teams;
 
     public int getId() {
         return id;
@@ -31,6 +27,22 @@ public class Game {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public String getGameName() {
@@ -41,19 +53,13 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
-
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
                 ", gameName='" + gameName + '\'' +
+                ", players=" + players +
+                ", teams=" + teams +
                 '}';
     }
 }
