@@ -208,64 +208,146 @@ public class StaffView {
         stage.show();
     }
 
-    public void editStaffForm() {
-        Stage stage = new Stage();
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(10));
+public void editStaffForm() {
+    Stage stage = new Stage();
+    VBox vbox = new VBox(10);
+    vbox.setPadding(new Insets(10));
 
-        TableView<Staff> staffTable = new TableView<>();
+    TableView<Staff> staffTable = new TableView<>();
 
-        try {
-            staffTable.getItems().addAll(staffDAO.findAll());
-        } catch (Exception e) {
-            System.err.println("Error loading staff: " + e.getMessage());
+    TableColumn<Staff, String> firstNameColumn = new TableColumn<>("First Name");
+    firstNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFirstName()));
+
+    TableColumn<Staff, String> lastNameColumn = new TableColumn<>("Last Name");
+    lastNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getLastName()));
+
+    TableColumn<Staff, String> nicknameColumn = new TableColumn<>("Nickname");
+    nicknameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNickname()));
+
+    TableColumn<Staff, String> emailColumn = new TableColumn<>("Email");
+    emailColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmail()));
+
+    TableColumn<Staff, String> addressColumn = new TableColumn<>("Address");
+    addressColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAddress()));
+
+    TableColumn<Staff, String> postalCodeColumn = new TableColumn<>("Postal Code");
+    postalCodeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPostalCode()));
+
+    TableColumn<Staff, String> cityColumn = new TableColumn<>("City");
+    cityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCity()));
+
+    TableColumn<Staff, String> countryColumn = new TableColumn<>("Country");
+    countryColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCountry()));
+
+    staffTable.getColumns().addAll(
+            firstNameColumn,
+            lastNameColumn,
+            nicknameColumn,
+            emailColumn,
+            addressColumn,
+            postalCodeColumn,
+            cityColumn,
+            countryColumn
+    );
+
+    try {
+        staffTable.getItems().addAll(staffDAO.findAll());
+    } catch (Exception e) {
+        System.err.println("Error loading staff: " + e.getMessage());
+    }
+
+    TextField firstName = new TextField();
+    TextField lastName = new TextField();
+    TextField nickname = new TextField();
+    TextField email = new TextField();
+    TextField address = new TextField();
+    TextField postalCode = new TextField();
+    TextField city = new TextField();
+    TextField country = new TextField();
+
+    Label validationMessage = new Label();
+    validationMessage.setStyle("-fx-text-fill: red;");
+
+    staffTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+        if (newSelection != null) {
+            firstName.setText(newSelection.getFirstName());
+            lastName.setText(newSelection.getLastName());
+            nickname.setText(newSelection.getNickname());
+            email.setText(newSelection.getEmail());
+            address.setText(newSelection.getAddress());
+            postalCode.setText(newSelection.getPostalCode());
+            city.setText(newSelection.getCity());
+            country.setText(newSelection.getCountry());
+        }
+    });
+
+    Button saveButton = new Button("Save");
+    saveButton.setOnAction(event -> {
+        Staff selectedStaff = staffTable.getSelectionModel().getSelectedItem();
+        if (selectedStaff == null) {
+            validationMessage.setText("Select a Staff to edit");
+            return;
         }
 
-        TextField firstName = new TextField();
-        TextField lastName = new TextField();
-        TextField email = new TextField();
-        Label validationMessage = new Label();
-        validationMessage.setStyle("-fx-text-fill: red;");
+        StringBuilder errors = new StringBuilder();
 
-        staffTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                firstName.setText(newSelection.getFirstName());
-                lastName.setText(newSelection.getLastName());
-                email.setText(newSelection.getEmail());
-            }
-        });
+        if (firstName.getText().trim().isEmpty()) {
+            errors.append("First Name is required.\n");
+        }
+        if (lastName.getText().trim().isEmpty()) {
+            errors.append("Last Name is required.\n");
+        }
+        if (!email.getText().matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            errors.append("Invalid email format.\n");
+        }
+        if (!postalCode.getText().matches("\\d{5}")) {
+            errors.append("Postal Code must be 5 digits.\n");
+        }
 
-        Button saveButton = new Button("Save");
-        saveButton.setOnAction(event -> {
-            Staff selectedStaff = staffTable.getSelectionModel().getSelectedItem();
-            if (selectedStaff == null) {
-                if (firstName.getText().trim().isEmpty()) {
-                    validationMessage.setText("First Name is required.\n");
-                } else {
-                    selectedStaff.setFirstName(firstName.getText());
-                    selectedStaff.setLastName(lastName.getText());
-                    selectedStaff.setEmail(email.getText());
-                    staffDAO.update(selectedStaff);
-                    staffTable.refresh();
-                    stage.close();
-                }
-            } else {
-                validationMessage.setText("Select a Staff to edit");
-            }
-        });
+        if (errors.length() > 0) {
+            validationMessage.setText(errors.toString());
+        } else {
+            selectedStaff.setFirstName(firstName.getText());
+            selectedStaff.setLastName(lastName.getText());
+            selectedStaff.setNickname(nickname.getText());
+            selectedStaff.setEmail(email.getText());
+            selectedStaff.setAddress(address.getText());
+            selectedStaff.setPostalCode(postalCode.getText());
+            selectedStaff.setCity(city.getText());
+            selectedStaff.setCountry(country.getText());
 
-        Button cancelButton = new Button("Cancel");
-        cancelButton.setOnAction(event -> stage.close());
+            staffDAO.update(selectedStaff);
+            staffTable.refresh();
+            stage.close();
+        }
+    });
 
-        HBox buttonBox = new HBox(10, saveButton, cancelButton);
-        buttonBox.setAlignment(Pos.CENTER);
+    Button cancelButton = new Button("Cancel");
+    cancelButton.setOnAction(event -> stage.close());
 
-        vbox.getChildren().addAll(new Label("First Name:"), firstName, new Label("Last Name:"), lastName, new Label("Email:"), email, validationMessage, staffTable, buttonBox);
-        Scene scene = new Scene(vbox, 800, 800);
-        stage.setScene(scene);
-        stage.setTitle("Edit Staff");
-        stage.show();
-    }
+    HBox buttonBox = new HBox(10, saveButton, cancelButton);
+    buttonBox.setAlignment(Pos.CENTER);
+
+    vbox.getChildren().addAll(
+            new Label("First Name:"), firstName,
+            new Label("Last Name:"), lastName,
+            new Label("Nickname:"), nickname,
+            new Label("Email:"), email,
+            new Label("Address:"), address,
+            new Label("Postal Code:"), postalCode,
+            new Label("City:"), city,
+            new Label("Country:"), country,
+            validationMessage,
+            staffTable,
+            buttonBox
+    );
+
+    Scene scene = new Scene(vbox, 800, 800);
+    stage.setScene(scene);
+    stage.setTitle("Edit Staff");
+    stage.show();
+}
+
     private boolean confirmDeletion(Staff staff) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
