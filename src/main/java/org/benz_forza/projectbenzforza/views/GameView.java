@@ -16,7 +16,7 @@ import org.benz_forza.projectbenzforza.DAO.GameDAO;
 import org.benz_forza.projectbenzforza.entities.Game;
 
 import java.util.List;
-
+//Denise
 public class GameView {
     public void start(Stage stage) {
         VBox root = new VBox(30);
