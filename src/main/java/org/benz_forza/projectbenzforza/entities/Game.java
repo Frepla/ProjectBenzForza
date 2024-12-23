@@ -1,7 +1,8 @@
 package org.benz_forza.projectbenzforza.entities;
 
 import jakarta.persistence.*;
-
+// Denise
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,10 +17,10 @@ public class Game {
     private String gameName;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Team> teams;
+    private List<Team> teams = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -53,13 +54,31 @@ public class Game {
         this.gameName = gameName;
     }
 
+
+    public void addPlayer(Player player) {
+        players.add(player);
+        player.setGame(this);
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
+        player.setGame(null);
+    }
+
+    public void addTeam(Team team) {
+        teams.add(team);
+        team.setGame(this);
+    }
+
+    public void removeTeam(Team team) {
+        teams.remove(team);
+        team.setGame(null);
+    }
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
                 ", gameName='" + gameName + '\'' +
-                ", players=" + players +
-                ", teams=" + teams +
                 '}';
     }
 }
