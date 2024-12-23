@@ -41,7 +41,6 @@ public class MatchDAO {
         return save(match);
     }
 
-
     private static void validateMatchInputs(Object participant1, Object participant2, Game game) {
         if (participant1 == null || participant2 == null || game == null) {
             throw new IllegalArgumentException("Both participants and the game must be provided.");
@@ -92,7 +91,7 @@ public class MatchDAO {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         try {
             TypedQuery<Match> query = entityManager.createQuery(
-                    "SELECT m FROM Match m WHERE m.matchDate > :currentDate", Match.class); // Corrected field
+                    "SELECT m FROM Match m WHERE m.matchDate > :currentDate", Match.class);
             query.setParameter("currentDate", LocalDateTime.now());
             return query.getResultList();
         } finally {

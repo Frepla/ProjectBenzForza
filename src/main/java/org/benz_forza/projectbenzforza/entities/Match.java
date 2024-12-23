@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-//Fredrik
+// Fredrik
 @Entity
 @Table(name = "matches")
 public class Match {

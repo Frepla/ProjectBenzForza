@@ -247,11 +247,11 @@ public class MatchView extends Application {
             if (matchType == Match.MatchType.PLAYER_VS_PLAYER) {
                 Player player1 = player1ComboBox.getValue();
                 Player player2 = player2ComboBox.getValue();
-                match = new Match(date.atTime(time), selectedGame, player1, player2, false, null); // matchen är inte klar och resultatet är null
+                match = new Match(date.atTime(time), selectedGame, player1, player2, false, null);
             } else {
                 Team team1 = team1ComboBox.getValue();
                 Team team2 = team2ComboBox.getValue();
-                match = new Match(date.atTime(time), selectedGame, team1, team2, false, null); // matchen är inte klar och resultatet är null
+                match = new Match(date.atTime(time), selectedGame, team1, team2, false, null);
             }
 
 
@@ -284,7 +284,7 @@ public class MatchView extends Application {
         alert.showAndWait();
     }
 
-    public static void main(String[] args) {
+  /*    public static void main(String[] args) {
         launch(args);
-    }
+    }*/
 }
