@@ -1,119 +1,106 @@
 package org.benz_forza.projectbenzforza.DAO;
 import jakarta.persistence.*;
 import org.benz_forza.projectbenzforza.entities.Game;
-
+// Denise
 import java.util.List;
 import java.util.ArrayList;
 
 public class GameDAO {
-private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myconfig");
+    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("myconfig");
 
-private static boolean addGame(String gameName){
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
-    EntityTransaction transaction = null;
+    public static boolean saveGame(String gameName) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        EntityTransaction transaction = null;
 
-    try {
-        transaction = entityManager.getTransaction();
-        transaction.begin();
-        Game game = new Game();
-        game.setGameName(gameName);
-        entityManager.persist(game);
-        transaction.commit();
-
-        System.out.println("Game added: " + game);
-        return true;
-    } catch (Exception e) {
-        if (transaction != null && transaction.isActive()) {
-            transaction.rollback();
-        }
-        e.printStackTrace();
-        return false;
-    } finally {
-        entityManager.close();
-    }
-}
-
-    public static Game getGameById(int gameId) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            return entityManager.find(Game.class, gameId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+
+            Game game = new Game();
+            game.setGameName(gameName);
+
+            entityManager.persist(game);
+            transaction.commit();
+
+            System.out.println("Game saved to database: " + game);
+            return true;
+
+        } catch (PersistenceException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                System.out.println("Error: Duplicate game name.");
+            } else {
+                System.out.println("Error: Could not save game. " + e.getMessage());
+            }
+            return false;
+
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public static Game getGameById(int id) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        try {
+            return entityManager.find(Game.class, id);
         } finally {
             entityManager.close();
         }
     }
 
     public static List<Game> getAllGames() {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        List<Game> gameList = new ArrayList<>();
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        List<Game> games = new ArrayList<>();
         try {
             TypedQuery<Game> query = entityManager.createQuery("FROM Game", Game.class);
-            gameList.addAll(query.getResultList());
-        } catch (Exception e) {
-            e.printStackTrace();
+            games.addAll(query.getResultList());
+            return games;
         } finally {
             entityManager.close();
         }
-        return gameList;
     }
 
-    public static boolean updateGameName(int gameId, String newGameName) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+    public static boolean updateGame(Game gameToUpdate) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-
-            Game game = entityManager.find(Game.class, gameId);
-            if (game != null) {
-                game.setGameName(newGameName);
-                entityManager.merge(game);
-                transaction.commit();
-                System.out.println("Game updated: " + game);
-                return true;
-            } else {
-                System.out.println("Game with ID " + gameId + " not found.");
-                return false;
-            }
-
+            entityManager.merge(gameToUpdate);
+            transaction.commit();
+            return true;
         } catch (Exception e) {
+            System.out.println("Error: Could not update game. " + e.getMessage());
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            e.printStackTrace();
             return false;
         } finally {
             entityManager.close();
         }
     }
 
-    public static boolean deleteGame(int gameId) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+    public static boolean deleteGameById(int id) {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction transaction = null;
-
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
-
-            Game game = entityManager.find(Game.class, gameId);
-            if (game != null) {
-                entityManager.remove(game);
+            Game gameToDelete = entityManager.find(Game.class, id);
+            if (gameToDelete != null) {
+                entityManager.remove(entityManager.contains(gameToDelete) ? gameToDelete : entityManager.merge(gameToDelete));
                 transaction.commit();
-                System.out.println("Game deleted: " + game);
+                System.out.println("Game deleted successfully.");
                 return true;
-            } else {
-                System.out.println("Game with ID " + gameId + " not found.");
-                return false;
             }
-
+            return false;
         } catch (Exception e) {
+            System.out.println("Error: Could not delete game. " + e.getMessage());
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            e.printStackTrace();
             return false;
         } finally {
             entityManager.close();
@@ -121,8 +108,8 @@ private static boolean addGame(String gameName){
     }
 
     public static void close() {
-        if (entityManagerFactory != null) {
-            entityManagerFactory.close();
+        if (ENTITY_MANAGER_FACTORY != null) {
+            ENTITY_MANAGER_FACTORY.close();
         }
     }
 }

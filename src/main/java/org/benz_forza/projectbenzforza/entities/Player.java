@@ -44,9 +44,9 @@ public class Player {
     @JoinColumn(name = "team_id", nullable = true)
     private Team teamId;
 
-   @ManyToOne
-   @JoinColumn(name = "game_id", nullable = true)
-   private Game gameId;
+    @ManyToOne
+    @JoinColumn(name = "game_id", nullable = true)
+    private Game gameId;
 
 
     public Player() {
@@ -126,11 +126,11 @@ public class Player {
     }
 
     public Game getGameId() {
-      return gameId;
-   }
+        return gameId;
+    }
 
-   public void setGameId(Game gameId) {
-       this.gameId = gameId;
+    public void setGameId(Game gameId) {
+        this.gameId = gameId;
     }
 
     public Team getTeamId() {
@@ -162,7 +162,7 @@ public class Player {
     }
 
 
-    }
+}
 
 
 
@@ -183,4 +183,3 @@ public class Player {
 //                ", gameId=" + gameId +
 //                '}';
 //    }
-
