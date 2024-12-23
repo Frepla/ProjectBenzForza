@@ -13,10 +13,10 @@ public class Game {
     @Column(name = "game_id")
     private int id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "game_name",nullable = false, unique = true)
     private String gameName;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "gameId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Player> players = new ArrayList<>();
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -57,12 +57,12 @@ public class Game {
 
     public void addPlayer(Player player) {
         players.add(player);
-        player.setGame(this);
+        player.setGameId(this);
     }
 
     public void removePlayer(Player player) {
         players.remove(player);
-        player.setGame(null);
+        player.setGameId(null);
     }
 
     public void addTeam(Team team) {

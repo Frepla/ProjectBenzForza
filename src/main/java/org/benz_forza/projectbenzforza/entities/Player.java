@@ -44,10 +44,9 @@ public class Player {
     @JoinColumn(name = "team_id", nullable = true)
     private Team teamId;
 
-   @ManyToOne
-   @JoinColumn(name = "game_id", nullable = true)
-   //private Game gameId;
-   private Game game; // Ändrade från gameId till game - Denise
+    @ManyToOne
+    @JoinColumn(name = "game_id", nullable = true)
+    private Game gameId;
 
 
     public Player() {
@@ -126,15 +125,12 @@ public class Player {
         this.email = email;
     }
 
-    //public Game getGameId() {
-    public Game getGame(){
-      //return gameId;
-        return game; // ändrade från gameId till game - Denise
-   }
+    public Game getGameId() {
+        return gameId;
+    }
 
-   public void setGameId(Game game) {
-       //this.gameId = gameId;
-       this.game = game; // ändrade från gameId till game - Denise
+    public void setGameId(Game gameId) {
+        this.gameId = gameId;
     }
 
     public Team getTeamId() {
@@ -155,25 +151,18 @@ public class Player {
         }
 
         String gameName;
-        if (game != null) { // ändrade till game - denise
-            gameName = game.getGameName();
-        } else {
-            gameName = "No Game";
-        }
-
-        /*String gameName;
         if (gameId != null) {
             gameName = gameId.getGameName();
         } else {
             gameName = "No Game";
-        }*/
+        }
 
         return
                 firstName + " " + "\"" + nickName + "\"" + " " + lastName + " | " + teamName + " | " + gameName;
     }
 
 
-    }
+}
 
 
 
@@ -194,4 +183,3 @@ public class Player {
 //                ", gameId=" + gameId +
 //                '}';
 //    }
-

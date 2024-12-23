@@ -53,9 +53,9 @@ public class MenuView {
         gameButton.setPrefSize(150, 50);
         gameButton.setOnAction(e -> {
             Stage gameStage = new Stage();
-     //       GameView gameView = new GameView();
+            GameView gameView = new GameView();
             try {
-    //           gameView.start(gameStage);
+              gameView.start(gameStage);
             } catch (Exception ex) {
                 System.out.println("Error while trying to load page: " + ex.getMessage());
             }
@@ -67,7 +67,7 @@ public class MenuView {
             Stage matchStage = new Stage();
             MatchView matchView = new MatchView();
             try {
-    //            matchView.start(matchStage);
+               matchView.start(matchStage);
             } catch (Exception ex) {
                 System.out.println("Error while trying to load page: " + ex.getMessage());
             }
