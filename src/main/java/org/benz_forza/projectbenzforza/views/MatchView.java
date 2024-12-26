@@ -389,9 +389,9 @@ public class MatchView extends Application {
                 } else {
                     if (match.getMatchType().equals("Player vs Player")) {
                         setText(match.getPlayer1().getFirstName() + " " + match.getPlayer1().getLastName() + " vs " +
-                                match.getPlayer2().getFirstName() + " " + match.getPlayer2().getLastName());
+                                match.getPlayer2().getFirstName() + " " + match.getPlayer2().getLastName() + " " + match.getMatchDate());
                     } else {
-                        setText(match.getTeam1().getTeamName() + " vs " + match.getTeam2().getTeamName());
+                        setText(match.getTeam1().getTeamName() + " vs " + match.getTeam2().getTeamName()  + " " + match.getMatchDate());
                     }
                 }
             }
@@ -507,24 +507,34 @@ public class MatchView extends Application {
 
         matchSelectionComboBox.setCellFactory(param -> new ListCell<Match>() {
             @Override
-            protected void updateItem(Match item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
+            protected void updateItem(Match match, boolean empty) {
+                super.updateItem(match, empty);
+                if (empty || match == null) {
                     setText(null);
                 } else {
-                    setText(item.getGame().getGameName() + " - " + item.getMatchDate());
+                    if (match.getMatchType().equals("Player vs Player")) {
+                        setText(match.getPlayer1().getFirstName() + " " + match.getPlayer1().getLastName() + " vs " +
+                                match.getPlayer2().getFirstName() + " " + match.getPlayer2().getLastName() + " - " + match.getMatchDate());
+                    } else {
+                        setText(match.getTeam1().getTeamName() + " vs " + match.getTeam2().getTeamName() + " - " + match.getMatchDate());
+                    }
                 }
             }
         });
 
         matchSelectionComboBox.setButtonCell(new ListCell<Match>() {
             @Override
-            protected void updateItem(Match item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
+            protected void updateItem(Match match, boolean empty) {
+                super.updateItem(match, empty);
+                if (empty || match == null) {
                     setText(null);
                 } else {
-                    setText(item.getGame().getGameName() + " - " + item.getMatchDate());
+                    if (match.getMatchType().equals("Player vs Player")) {
+                        setText(match.getPlayer1().getFirstName() + " " + match.getPlayer1().getLastName() + " vs " +
+                                match.getPlayer2().getFirstName() + " " + match.getPlayer2().getLastName() + " - " + match.getMatchDate());
+                    } else {
+                        setText(match.getTeam1().getTeamName() + " vs " + match.getTeam2().getTeamName() + " - " + match.getMatchDate());
+                    }
                 }
             }
         });
@@ -565,6 +575,7 @@ public class MatchView extends Application {
         deleteMatchStage.setTitle("Delete Match");
         deleteMatchStage.show();
     }
+
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
