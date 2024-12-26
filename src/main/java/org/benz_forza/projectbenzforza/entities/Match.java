@@ -1,8 +1,7 @@
 package org.benz_forza.projectbenzforza.entities;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 
 // Fredrik
 @Entity
@@ -13,97 +12,42 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "match_type", nullable = false)
-    private MatchType matchType;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player1_id")
-    private Player player1;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player2_id")
-    private Player player2;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team1_id")
-    private Team team1;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team2_id")
-    private Team team2;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "winner_player_id")
-    private Player winnerPlayer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "winner_team_id")
-    private Team winnerTeam;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id")
+    @ManyToOne
+    @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
+    @ManyToOne
+    @JoinColumn (name = "player1_id")
+    private Player player1;
+
+    @ManyToOne
+    @JoinColumn (name = "player2_id")
+    private Player player2;
+
+    @ManyToOne
+    @JoinColumn (name = "team1_id")
+    private Team  team1;
+
+    @ManyToOne
+    @JoinColumn (name = "team2_id")
+    private Team team2;
+
     @Column(name = "match_date", nullable = false)
-    private LocalDateTime matchDate;
+    private LocalDate matchDate;
 
-    @Column(name = "is_finished", nullable = false)
-    private boolean isFinished;
+    @Column(name = "match_type", nullable = false)
+    private String matchType;
 
-    @Column(name = "result")
-    private String result;
+    @Column (name = "match_status", nullable = false)
+    private String matchStatus;
 
-    public enum MatchType {
-        PLAYER_VS_PLAYER,
-        TEAM_VS_TEAM
-    }
+    @Column (name = "match_result")
+    private String matchResult;
 
-    public Match() {
-    }
+    @Column (name = "match_winner")
+    private String matchWinner;
 
-    public Match(LocalDateTime matchDate, Game game, Player player1, Player player2, boolean isFinished, String result) {
-        this.matchType = MatchType.PLAYER_VS_PLAYER;
-        this.matchDate = matchDate;
-        this.game = game;
-        this.player1 = player1;
-        this.player2 = player2;
-        this.isFinished = isFinished;
-        this.result = result;
-    }
-
-    public Match(LocalDateTime matchDate, Game game, Team team1, Team team2, boolean isFinished, String result) {
-        this.matchType = MatchType.TEAM_VS_TEAM;
-        this.matchDate = matchDate;
-        this.game = game;
-        this.team1 = team1;
-        this.team2 = team2;
-        this.isFinished = isFinished;
-        this.result = result;
-    }
-
-    @PrePersist
-    @PreUpdate
-    public void validateMatch() {
-        if (matchDate == null) {
-            throw new IllegalStateException("Match date must be set.");
-        }
-
-        if (matchType == MatchType.PLAYER_VS_PLAYER) {
-            if (player1 == null || player2 == null) {
-                throw new IllegalStateException("Player1 and Player2 must be set for PLAYER_VS_PLAYER matches.");
-            }
-            if (team1 != null || team2 != null) {
-                throw new IllegalStateException("Team1 and Team2 must be null for PLAYER_VS_PLAYER matches.");
-            }
-        } else if (matchType == MatchType.TEAM_VS_TEAM) {
-            if (team1 == null || team2 == null) {
-                throw new IllegalStateException("Team1 and Team2 must be set for TEAM_VS_TEAM matches.");
-            }
-            if (player1 != null || player2 != null) {
-                throw new IllegalStateException("Player1 and Player2 must be null for TEAM_VS_TEAM matches.");
-            }
-        }
+    public Match(){
     }
 
     public int getId() {
@@ -114,12 +58,12 @@ public class Match {
         this.id = id;
     }
 
-    public MatchType getMatchType() {
-        return matchType;
+    public Game getGame() {
+        return game;
     }
 
-    public void setMatchType(MatchType matchType) {
-        this.matchType = matchType;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public Player getPlayer1() {
@@ -154,77 +98,59 @@ public class Match {
         this.team2 = team2;
     }
 
-    public Player getWinnerPlayer() {
-        return winnerPlayer;
-    }
-
-    public void setWinnerPlayer(Player winnerPlayer) {
-        this.winnerPlayer = winnerPlayer;
-    }
-
-    public Team getWinnerTeam() {
-        return winnerTeam;
-    }
-
-    public void setWinnerTeam(Team winnerTeam) {
-        this.winnerTeam = winnerTeam;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public LocalDateTime getMatchDate() {
+    public LocalDate getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(LocalDateTime matchDate) {
+    public void setMatchDate(LocalDate matchDate) {
         this.matchDate = matchDate;
     }
 
-    public boolean isFinished() {
-        return isFinished;
+    public String getMatchType() {
+        return matchType;
     }
 
-    public void setFinished(boolean finished) {
-        if (finished && result == null) {
-            throw new IllegalStateException("Result must be set if the match is finished.");
-        }
-        this.isFinished = finished;
+    public void setMatchType(String matchType) {
+        this.matchType = matchType;
     }
 
-    public String getResult() {
-        return result;
+    public String getMatchStatus() {
+        return matchStatus;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setMatchStatus(String matchStatus) {
+        this.matchStatus = matchStatus;
     }
 
-    public void setMatchDateFromString(String matchDateString) {
-        if (matchDateString == null || matchDateString.isEmpty()) {
-            throw new IllegalArgumentException("Match date string cannot be null or empty.");
-        }
-
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            this.matchDate = LocalDateTime.parse(matchDateString, formatter);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid match date format. Expected format: yyyy-MM-dd HH:mm", e);
-        }
+    public String getMatchResult() {
+        return matchResult;
     }
 
-    public Object getWinner() {
-        if (matchType == MatchType.PLAYER_VS_PLAYER) {
-            return winnerPlayer;
-        } else if (matchType == MatchType.TEAM_VS_TEAM) {
-            return winnerTeam;
-        }
-        return null;
+    public void setMatchResult(String matchResult) {
+        this.matchResult = matchResult;
     }
 
+    public String getMatchWinner() {
+        return matchWinner;
+    }
+
+    public void setMatchWinner(String matchWinner) {
+        this.matchWinner = matchWinner;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                ", game=" + game +
+                ", player1=" + player1 +
+                ", player2=" + player2 +
+                ", team1=" + team1 +
+                ", team2=" + team2 +
+                ", matchDate=" + matchDate +
+                ", matchType='" + matchType + '\'' +
+                ", matchStatus='" + matchStatus + '\'' +
+                ", matchResult='" + matchResult + '\'' +
+                '}';
+    }
 }
